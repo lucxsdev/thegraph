@@ -1,0 +1,33 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: MetaStorage
+    network: mumbai
+    source:
+      address: "0xf8a4dADdD569089a6f0CefF64Ff3e25CBF378888"
+      abi: MetaStorage
+      startBlock: 25128241
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - HostCreated
+        - TicketBought
+        - childCreated
+        - CreateNewFeature
+      abis:
+        - name: MetaStorage
+          file: MetaStorage\abis\MetaStorage.json
+      eventHandlers:
+        - event: HostCreated(address,string,string,string,string)
+          handler: handleHostCreated
+        - event: TicketBought(address,address,uint256)
+          handler: handleTicketBought
+        - event: childCreated(string,uint256,uint256,string,address,string,string,string,address,string,address[],string)
+          handler: handlechildCreated
+        - event: CreateNewFeature(address)
+          handler: handleCreateNewFeature
+      file: MetaStorage\MetaStorage.wasm
